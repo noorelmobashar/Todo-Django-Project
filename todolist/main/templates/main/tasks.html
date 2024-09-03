@@ -1,0 +1,27 @@
+{% extends "main/baseLogged.html" %}
+
+{% block content %}
+
+    <div class="container d-flex flex-column justify-content-end align-items-center pt-5 pb-5">
+        {% for task_list in tasks %}
+            <div class="row d-flex justify-content-between mt-3">
+                {% for task in task_list %}
+                
+                
+                    <div class="card col-3 me-4" style="width: 18rem;">
+                        <div class="card-body">
+                        <h5 class="card-title">{{task.title}}</h5>
+                        <p class="card-text">{{task.description}}</p>
+                        <a href="{% url 'details' task.category task.id %}" class="btn btn-primary">Show details</a>
+                        </div>
+                    </div>
+                
+
+                {% endfor %}
+            </div>
+            {% empty %}
+                    <h2>No Task Here, add a new one!</h2>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

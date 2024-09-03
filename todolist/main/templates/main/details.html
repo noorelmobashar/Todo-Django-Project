@@ -1,0 +1,39 @@
+{% extends "main/baseLogged.html" %}
+
+{% block content %}
+
+
+    <div class="container d-flex flex-row justify-content-center pt-5 pb-5">
+        {% for task in tasks %}
+            <div class="card border-success mb-3" style="max-width: 30rem;">
+                <div class="card-header bg-transparent border-success">Task Details</div>
+                <div class="card-body">
+                <h5 class="card-title">{{task.title}}</h5>
+                <p class="card-text">Description: {{task.description}}</p>
+                <span>Title: </span>
+                <span class="card-text {% if task.status == 'IN PROGRESS'%} text-danger {% elif task.status == 'COMPLETED'%} text-success {% elif task.status == 'PENDING'%} text-primary {% endif %}">{{task.status}}</span>
+                <p class="card-text">Task Start Date: {{task.start_date}}</p>
+                <p class="card-text">Task End Date: {{task.end_date}}</p>
+                <a href="{% url 'updatetask' task.category task.id %}" class="btn btn-success btn-sm">Update</a>
+                <a href="{% url 'deletetask' task.category task.id  %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+                <div class="card-footer bg-transparent border-success">
+                   <p> Comments </p>
+
+                   {% for comment in comments %}
+                    
+                        <div class="card mb-3" style="max-width: 30rem;">
+                            <div class="card-header">{{comment.comment}}</div>
+                            <div class="card-body">
+                            <p class="card-text">{{comment.date}}</p>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No comments for now</p>
+                   {% endfor %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

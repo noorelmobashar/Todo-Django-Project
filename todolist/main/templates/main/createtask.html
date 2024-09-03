@@ -1,0 +1,53 @@
+{% extends "main/baseLogged.html" %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center form-control pt-5 mt-2 col-4">
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div align='center'>
+            <h2>Create Task</h2>
+            <hr class="border border-primary border-1 opacity-75 mb-5 col-4">
+        </div>
+        
+        <div class="form-floating mb-3 ">
+        {{ form.title }}        
+        <label for="floatingInput">Task title</label>
+        </div>
+
+
+        <div class="form-floating mb-3">
+        {{ form.description }}   
+        <label for="floatingInput">Task Description</label>
+        </div>
+
+        <div class=" mb-3">
+        <label for="floatingInput">Task Start Date</label>
+        <input type="date" class="form-control" id="start_date" name="start_date">  
+        
+        </div>
+
+        <div class=" mb-3">
+        <label for="floatingInput">Task End Date</label>
+        <input type="date" class="form-control" id="end_date" name="end_date">
+        
+        </div>
+
+        <div class="mb-3">
+        <label for="floatingInput">Task Category</label>
+        {{ form.category }}    
+        </div>
+
+        <input type="hidden" name="user" value="{{ user_id }}">
+        <input type="hidden" name="status" value="PENDING">
+
+        <div class="d-flex justify-content-around mt-3 align-items-center pt-2 mb-3">
+            <input type="submit" class="btn btn-primary" value="Create">
+            <a href="{% url 'index' %}" class="btn btn-dark"> Back</a>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
