@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import *
-from .forms import LoginForm, RegisterForm, CategoryForm, TaskForm
+from .forms import LoginForm, RegisterForm, CategoryForm, TaskForm, CommentForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
@@ -84,7 +84,7 @@ def show_details(request,catid, id):
     if request.user.is_authenticated:
 
         tasks = Task.objects.filter(id=id, user=request.user.id)
-        comments = Comment.objects.filter(task=id)
+        comments = Comment.objects.filter(task=id).order_by('-date')
         context = {
             'tasks': tasks,
             'comments': comments,
@@ -212,8 +212,7 @@ def update_task(request, cat, id):
         if form.is_valid() :
             form.save()          
             return redirect('tasks', name=cat)
-        else:
-            print(form)
+
     else:  
         form = TaskForm(instance=task)
     return render(request, 'main/updatetask.html' , {'form':form, 'user_id':request.user.id})
@@ -227,3 +226,20 @@ def delete_task(request, cat, id):
     task.delete()
 
     return redirect('tasks', name=cat)
+
+def create_comment(request, id):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    task = get_object_or_404(Task, id=id, user=request.user.id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid() :
+            form.save()          
+            return redirect('details', catid = task.category, id = task.id)
+
+    else:  
+        form = CommentForm()
+        
+    return render(request, 'main/createcomment.html' , {'form':form, 'task': task})

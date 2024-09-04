@@ -1,0 +1,45 @@
+{% extends "main/baseLogged.html" %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center form-control pt-5 mt-2 col-4">
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div align='center'>
+            <h2>Create Comment</h2>
+            <hr class="border border-primary border-1 opacity-75 mb-5 col-4">
+        </div>
+        
+        <div class="form-floating mb-3 ">
+        {{ form.comment }}        
+        <label for="floatingInput">Write your comment</label>
+        </div>
+
+
+
+        <input type="hidden" class="form-control" id="dateInput" name="date">  
+        <input type="hidden" name="task" value="{{ task.id }}">
+
+        <div class="d-flex justify-content-around mt-3 align-items-center pt-2 mb-3">
+            <input type="submit" class="btn btn-primary" value="Create">
+            <a href="{% url 'details' task.category task.id %}" class="btn btn-dark"> Back</a>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block date_script %}
+    <script>
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+        var day = ("0" + today.getDate()).slice(-2);
+        var formattedDate = year + "-" + month + "-" + day;
+        document.getElementById("dateInput").value = formattedDate;
+
+    </script>
+{% endblock date_script %}

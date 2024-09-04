@@ -16,6 +16,7 @@
                 <p class="card-text">Task End Date: {{task.end_date}}</p>
                 <a href="{% url 'updatetask' task.category task.id %}" class="btn btn-success btn-sm">Update</a>
                 <a href="{% url 'deletetask' task.category task.id  %}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{% url 'createcom' task.id  %}" class="btn btn-primary btn-sm">Add Comment</a>
                 </div>
                 <div class="card-footer bg-transparent border-success">
                    <p> Comments </p>

@@ -19,7 +19,7 @@ class RegisterForm(UserCreationForm):
             'placeholder': 'confirm your password',
             'class': 'form-control ',
             'id': 'floatingInput',
-            })
+        })
     )
 
 
@@ -88,3 +88,16 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'status', 'start_date', 'end_date', 'category', 'user']
+
+class CommentForm(forms.ModelForm):
+
+    comment = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Enter your comment', 'class': 'form-control', 'id': 'floatingTextarea2', 'size':30, 'style':'height:200px;'})#noor
+    )
+
+    date = forms.DateField(input_formats=['%Y-%m-%d'])
+
+    class Meta:
+
+        model = Comment
+        fields = ['comment', 'date', 'task']

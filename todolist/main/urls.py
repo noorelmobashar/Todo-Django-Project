@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, show_tasks, show_details, show_tasks_by_status, register, login, logout, create_category, create_task, update_category, delete_category, update_task, delete_task
+from .views import index, show_tasks, show_details, show_tasks_by_status, register, login, logout, create_category, create_task, update_category, delete_category, update_task, delete_task, create_comment
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import render, redirect
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('delete/category/<id>', delete_category, name='deletecat'),
     path('update/<cat>/<id>', update_task, name='updatetask'),
     path('delete/<cat>/<id>', delete_task, name='deletetask'),
+    path('create/comment/<id>', create_comment, name='createcom'),
 ]
